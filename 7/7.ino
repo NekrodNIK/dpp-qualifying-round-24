@@ -28,6 +28,13 @@ void gen_keys(int p, int q, int* Is, int* Ik, int* Id) {
     *Id = d;
 }
 
+int rsa_encode(int value, int s, int k) {
+  return value^k % s;
+}
+
+int rsa_decode(int value, int s, int d) {
+  return value^d % s;
+}
 
 void setup() {
   Serial.begin(9600);
@@ -38,10 +45,10 @@ void setup() {
   gen_keys(p, q, &s, &k, &d);
 
   int M = 10;
-  int encoded = M^k % s;
+  int encoded = rsa_encode(M, s, k);
   Serial.println(encoded);
   
-  int decoded = encoded^d % s;
+  int decoded = rsa_decode(encoded, s, k);
 
   if (M == decoded) {
     Serial.print("M == encoded -> successfully encode");
