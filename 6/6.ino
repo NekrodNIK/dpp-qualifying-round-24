@@ -34,7 +34,7 @@ void onReceive(int packetSize) {
   for (int i = 0; i < packetSize; i++) {
     if ((char)LoRa.read() == 'k') {
       key_found = true;
-      stop_i = i;
+      stop_i = i+1;
       break;
     }
   }
